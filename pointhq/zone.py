@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
 
+try:
+    import simplejson as json
+except:
+    import json
+
+
 class ZoneError(Exception):
     pass
 
@@ -42,13 +48,8 @@ class BaseItem(object):
         # appropriately
         if self.base.__contains__("status"):
             self.isstatus = True
-        else:
-            # As long as we're here, check that there's an `id` key. If not
-            # raise an error because nothing else is going to work
-            if not self.base.__contains__("id"):
-                raise ZoneError(
-                        "Resource response missing `zone` or `zone_record`")
             
+
 class Zone(BaseItem):
 
     # Zone is an abstract for basic zone items. This may include only one
@@ -90,6 +91,23 @@ class Zone(BaseItem):
         if not self.isstatus:
             return self.base["ttl"]
         return None
+
+    def serialize(self):
+
+        zone_parameters = {}
+
+        if self.id:
+            zone_parameters["id"] = self.id
+        if self.name:
+            zone_parameters["name"] = self.name
+        if self.group:
+            zone_parameters["group"] = self.group
+        if self.user_id:
+            zone_parameters["user-id"] = self.user_id
+        if self.ttl:
+            zone_parameters["ttl"] = self.ttl
+
+        return json.dumps({"zone": zone_parameters})
 
 
 class ZoneRecord(BaseItem):
@@ -150,3 +168,26 @@ class ZoneRecord(BaseItem):
         if not self.isstatus:
             return self.base["redirect_to"]
         return None
+
+    def serialize(self):
+
+        zone_record_parameters = {}
+
+        if self.id:
+            zone_record_parameters["id"] = self.id
+        if self.name:
+            zone_record_parameters["name"] = self.name
+        if self.ttl:
+            zone_record_parameters["ttl"] = self.data
+        if self.aux:
+            zone_record_parameters["aux"] = self.aux
+        if self.record_type:
+            zone_record_parameters["record_type"] = self.record_type
+        if self.redirect_to:
+            zone_record_parameters["redirect_to"] = self.redirect_to
+        if self.data:
+            zone_record_parameters["data"] = self.data
+        if self.zone_id:
+            zone_record_parameters["zone_id"] = self.zone_id
+
+        return json.dumps({"zone_record": zone_record_parameters})
