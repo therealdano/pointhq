@@ -10,7 +10,8 @@ class UnprocessableEntityError(Exception):
         self.messages = messages
 
 class RequestAccepted(Exception):
-    
+    pass
+
 class NotFoundError(Exception):
     pass
 
