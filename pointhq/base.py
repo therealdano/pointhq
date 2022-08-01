@@ -46,6 +46,8 @@ class BaseMember(BaseResourse):
         response = self.request('delete')
         if response.status == 200:
             return
+        if response.status == 202:
+            raise exceptions.RequestAccepted
         if response.status == 409:
             raise exceptions.ConflictError
         raise exceptions.UnknownError(response)

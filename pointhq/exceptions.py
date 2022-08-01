@@ -9,7 +9,8 @@ class UnprocessableEntityError(Exception):
     def __init__(self, messages):
         self.messages = messages
 
-
+class RequestAccepted(Exception):
+    
 class NotFoundError(Exception):
     pass
 
