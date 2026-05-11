@@ -8,13 +8,15 @@ def read(filename):
 
 setup(
     name = 'pointhq',
-    version = '0.1.1',
+    version = '0.1.2',
     license = 'ISC',
     description = 'pointhq.com API client',
     long_description = read('README.rst'),
-    url = 'https://github.com/yumike/pointhq',
-    author = 'Mike Yumatov',
-    author_email = 'mike@yumatov.org',
+    # Original repository https://github.com/yumike/pointhq
+    url = "https://github.com/therealdano/pointhq",
+    # Original author Mike Yumatov <mailto:mike@yumatov.org>
+    author = 'Dano Carroll',
+    author_email = 'dano.carroll@constrainttec.com',
     packages = find_packages(),
     install_requires = [
         'httplib2',
